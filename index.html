@@ -107,6 +107,19 @@ body.dark #darkModeToggle { background: #444; color: white; }
 body.dark .signature {
   color: #666;
 }
+@keyframes blinkOnce {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.addPresetBtn.blink,
+#quickModeBlock button.blink,
+.template.blink,
+#copyBtn.blink,
+#resetBtn.blink {
+  animation: blinkOnce 0.18s ease-in-out;
+}
 </style>
 </head>
 
@@ -246,6 +259,16 @@ function showCopyAlert(){let m=document.createElement("div"); m.innerText="Texte
 function resetAll(){document.querySelectorAll("input[type=text],textarea").forEach(e=>e.value=""); document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false); document.querySelectorAll(".optional-block").forEach(b=>b.style.display="none"); setMode("SOLDE");}
 function toggleDarkMode(){document.body.classList.toggle("dark"); const b=document.getElementById("darkModeToggle"); if(document.body.classList.contains("dark")){b.innerText="☀️"; localStorage.setItem("darkMode","on");} else{b.innerText="🌙"; localStorage.setItem("darkMode","off");}}
 window.onload=function(){if(localStorage.getItem("darkMode")==="on"){document.body.classList.add("dark");document.getElementById("darkModeToggle").innerText="☀️";}}; setMode("SOLDE");
+document.addEventListener("click", function(e) {
+  if (e.target.matches(
+    ".addPresetBtn, #quickModeBlock button, .template, #copyBtn, #resetBtn"
+  )) {
+    e.target.classList.add("blink");
+    e.target.addEventListener("animationend", function() {
+      e.target.classList.remove("blink");
+    }, { once: true });
+  }
+});
 </script>
 
 </body>
