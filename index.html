@@ -64,7 +64,26 @@ textarea, input, select {
 #capella, #cpa, #expert { height: 40px; }
 
 .optional-block { display: none; }
-.checkbox-line { margin-top: 8px; font-weight: bold; }
+
+/* Checkbox styling */
+.checkbox-line {
+  margin-top: 8px;
+}
+
+.checkbox-line label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 4px 0;
+  padding: 0;
+}
+
+.checkbox-line input[type="checkbox"] {
+  margin: 0;
+  vertical-align: middle;
+}
 
 #quickModeBlock button {
   width: 100%;
@@ -73,9 +92,7 @@ textarea, input, select {
   cursor: pointer;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 /* Boutons bas */
 #copyBtn { background: black; color: white; }
@@ -104,9 +121,9 @@ body.dark #darkModeToggle { background: #444; color: white; }
   pointer-events: none;
 }
 
-body.dark .signature {
-  color: #666;
-}
+body.dark .signature { color: #666; }
+
+/* Animation blink */
 @keyframes blinkOnce {
   0%   { opacity: 1; }
   50%  { opacity: 0.2; }
@@ -148,11 +165,11 @@ body.dark .signature {
   <input id="date">
 
   <label id="anomalieLabel">Anomalie Bloquante :</label>
-   <div style="display:flex; gap:4px; align-items:center;">
-  <button class="addPresetBtn" onclick="addAnomaliePreset()">➕</button>
-  <input type="text" id="newAnomalie" placeholder="Ajouter">
-</div>
-   <select id="anomalieSelect" onchange="applyAnomaliePreset()">
+  <div style="display:flex; gap:4px; align-items:center;">
+    <button class="addPresetBtn" onclick="addAnomaliePreset()">➕</button>
+    <input type="text" id="newAnomalie" placeholder="Ajouter">
+  </div>
+  <select id="anomalieSelect" onchange="applyAnomaliePreset()">
     <option value="">-- Choisir --</option>
   </select>
   <textarea id="anomalie"></textarea>
@@ -168,35 +185,43 @@ body.dark .signature {
 
   <label>Ce que j'ai fait :</label>
   <div style="display:flex; gap:4px; align-items:center;">
-  <button class="addPresetBtn" onclick="addFaitPreset()">➕</button>
-  <input type="text" id="newFait" placeholder="Ajouter">
-</div>
-   <select id="presetSelect" onchange="applyPreset()">
+    <button class="addPresetBtn" onclick="addFaitPreset()">➕</button>
+    <input type="text" id="newFait" placeholder="Ajouter">
+  </div>
+  <select id="presetSelect" onchange="applyPreset()">
     <option value="">-- Choisir --</option>
   </select>
   <textarea id="fait"></textarea>
 
-  <div class="checkbox-line">
-    <input type="checkbox" id="capellaCheck" onchange="toggleField('capellaBlock', this)"> Capella
-  </div>
-  <div id="capellaBlock" class="optional-block">
-    <textarea id="capella"></textarea>
-  </div>
+<div class="checkbox-line">
+  <label>
+    <input type="checkbox" id="capellaCheck" onchange="toggleField('capellaBlock', this)">
+    Capella
+  </label>
+</div>
+<div id="capellaBlock" class="optional-block">
+  <textarea id="capella"></textarea>
+</div>
+<div class="checkbox-line">
+  <label>
+    <input type="checkbox" id="cpaCheck" onchange="toggleField('cpaBlock', this)">
+    CPA
+  </label>
+</div>
+<div id="cpaBlock" class="optional-block">
+  <textarea id="cpa"></textarea>
+</div>
+<div class="checkbox-line">
+  <label>
+    <input type="checkbox" id="expertCheck" onchange="toggleField('expertBlock', this)">
+    Expert
+  </label>
+</div>
+<div id="expertBlock" class="optional-block">
+  <textarea id="expert"></textarea>
+</div>
 
-  <div class="checkbox-line">
-    <input type="checkbox" id="cpaCheck" onchange="toggleField('cpaBlock', this)"> CPA
-  </div>
-  <div id="cpaBlock" class="optional-block">
-    <textarea id="cpa"></textarea>
-  </div>
-
-  <div class="checkbox-line">
-    <input type="checkbox" id="expertCheck" onchange="toggleField('expertBlock', this)"> Expert
-  </div>
-  <div id="expertBlock" class="optional-block">
-    <textarea id="expert"></textarea>
-  </div>
-
+  <!-- Boutons bas -->
   <div class="bottom-buttons">
     <button id="copyBtn" onclick="copierTexte()">Copier tout</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
@@ -212,9 +237,11 @@ body.dark .signature {
 Traitement: Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
   <button onclick="copierTexteRapide(this)">Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
 </div>
+
 <div class="signature">
   © 2026 - Créé par IdrenSound
 </div>
+
 <script>
 let currentMode = "SOLDE";
 const presets = {
@@ -259,10 +286,10 @@ function showCopyAlert(){let m=document.createElement("div"); m.innerText="Texte
 function resetAll(){document.querySelectorAll("input[type=text],textarea").forEach(e=>e.value=""); document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false); document.querySelectorAll(".optional-block").forEach(b=>b.style.display="none"); setMode("SOLDE");}
 function toggleDarkMode(){document.body.classList.toggle("dark"); const b=document.getElementById("darkModeToggle"); if(document.body.classList.contains("dark")){b.innerText="☀️"; localStorage.setItem("darkMode","on");} else{b.innerText="🌙"; localStorage.setItem("darkMode","off");}}
 window.onload=function(){if(localStorage.getItem("darkMode")==="on"){document.body.classList.add("dark");document.getElementById("darkModeToggle").innerText="☀️";}}; setMode("SOLDE");
+
+/* Blink animation for all buttons */
 document.addEventListener("click", function(e) {
-  if (e.target.matches(
-    ".addPresetBtn, #quickModeBlock button, .template, #copyBtn, #resetBtn"
-  )) {
+  if (e.target.matches(".addPresetBtn, #quickModeBlock button, .template, #copyBtn, #resetBtn")) {
     e.target.classList.add("blink");
     e.target.addEventListener("animationend", function() {
       e.target.classList.remove("blink");
@@ -273,4 +300,3 @@ document.addEventListener("click", function(e) {
 
 </body>
 </html>
-
