@@ -77,7 +77,6 @@ textarea, input, select {
   box-sizing: border-box;
 }
 
-}
 /* Boutons bas */
 #copyBtn { background: black; color: white; }
 #resetBtn { background: #999; color: white; }
@@ -94,6 +93,20 @@ body.dark #copyBtn { background: #0a84ff; }
 body.dark #resetBtn { background: #555; }
 body.dark #darkModeToggle { background: #444; color: white; }
 
+.signature {
+  position: fixed;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: #888;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+body.dark .signature {
+  color: #666;
+}
 </style>
 </head>
 
@@ -184,13 +197,13 @@ body.dark #darkModeToggle { background: #444; color: white; }
 Traitement: Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
   <button onclick="copierTexteRapide(this)">Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
 </div>
-
+<div class="signature">
+  © 2026 - Créé par IdrenSound pour F.M.S.
 </div>
-
 <script>
 let currentMode = "SOLDE";
 const presets = {
-  SOLDE: ["Analyse + Solde via assistant CRI () -> Terminé + PDL à jour"],
+  SOLDE: ["Analyse + Solde via assistant CRI () + Terminé + PDL à jour"],
   PRE: ["Analyse + 1er appel KO + MV -> Relance","Analyse + 1er appel OK + RDV + SMS"]
 };
 const anomaliePresets = { SOLDE: [], PRE: [] };
@@ -234,5 +247,4 @@ window.onload=function(){if(localStorage.getItem("darkMode")==="on"){document.bo
 </script>
 
 </body>
-
 </html>
