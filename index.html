@@ -59,9 +59,9 @@ textarea, input, select {
 }
 
 #anomalie { height: 40px; }
-#illico { height: 30px; }
+#illico { height: 40px; }
 #fait { height: 50px; }
-#capella, #cpa, #expert { height: 30px; }
+#capella, #cpa, #expert { height: 40px; }
 
 .optional-block { display: none; }
 .checkbox-line { margin-top: 8px; font-weight: bold; }
@@ -135,14 +135,14 @@ body.dark .signature {
   <input id="date">
 
   <label id="anomalieLabel">Anomalie Bloquante :</label>
-  <textarea id="anomalie"></textarea>
-
-  <label>Préremplissage Anomalie :</label>
-  <select id="anomalieSelect" onchange="applyAnomaliePreset()">
+   <select id="anomalieSelect" onchange="applyAnomaliePreset()">
     <option value="">-- Choisir --</option>
   </select>
-  <input type="text" id="newAnomalie" placeholder="Ajouter">
+  <div style="display:flex; gap:4px; align-items:center;">
   <button class="addPresetBtn" onclick="addAnomaliePreset()">Ajouter</button>
+  <input type="text" id="newAnomalie" placeholder="Ajouter">
+</div>
+  <textarea id="anomalie"></textarea>
 
   <label>Illico :</label>
   <select onchange="applyIllicoPreset(this.value)">
@@ -157,8 +157,10 @@ body.dark .signature {
   <select id="presetSelect" onchange="applyPreset()">
     <option value="">-- Choisir --</option>
   </select>
-  <input type="text" id="newFait" placeholder="Ajouter">
+  <div style="display:flex; gap:4px; align-items:center;">
   <button class="addPresetBtn" onclick="addFaitPreset()">Ajouter</button>
+  <input type="text" id="newFait" placeholder="Ajouter">
+</div>
   <textarea id="fait"></textarea>
 
   <div class="checkbox-line">
