@@ -25,7 +25,7 @@ body {
 .mode-buttons, .template-buttons, .bottom-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 6px;  
 }
 button {
   flex: 1;
@@ -37,14 +37,14 @@ button {
   transition: 0.3s;
   white-space: pre-wrap;
 }
-.mode { background: #666; color: white; }
-.template { background: #333; color: white; }
+.mode { background: #666; color: white; font-size: 16px; }
+.template { background: #333; color: white; font-size: 16px; }
 .active { background: #007bff !important; }
 label { font-weight: bold; margin-top: 8px; display: block; }
 textarea, input, select {
   width: 100%;
   padding: 8px;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.4em;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -91,9 +91,9 @@ textarea, input, select {
   flex: 1;
 }
 * { box-sizing: border-box; }
-#copyBtn { background: black; color: white; }
-#resetBtn { background: #999; color: white; }
-#darkModeToggle { width: 50px; background: #ddd; }
+#copyBtn { background: black; color: white; font-size: 16px; }
+#resetBtn { background: #999; color: white; font-size: 16px; }
+#darkModeToggle { width: 50px; background: #ddd; font-size: 16px; }
 body.dark { background: #121212; color: #e0e0e0; }
 body.dark .container { background: #1e1e1e; }
 body.dark textarea, body.dark input, body.dark select { background: #2a2a2a; color: white; border: 1px solid #444; }
@@ -157,7 +157,7 @@ body.dark .signature { color: #666; }
   <label>Illico :</label>
   <select id="illicoSelect" onchange="applyIllicoPreset(this.value)">    <option value="">-- Choisir --</option>
     <option value="À jour + Ping OK">À jour + Ping OK</option>
-    <option value=" + Ping KO"> + Ping KO</option>
+    <option value="+ Ping KO">+ Ping KO</option>
     <option value="Historique">Historique</option>
   </select>
   <textarea id="illico" placeholder="-- Illico --"></textarea>
@@ -273,6 +273,3 @@ document.addEventListener("click", function(e) {
 </script>
 </body>
 </html>
-
-
-
