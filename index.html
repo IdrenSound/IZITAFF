@@ -296,9 +296,8 @@ body.dark .signature { color: #666; }
       </div>
       <div id="capellaBlock" class="optional-block"><textarea id="capella"></textarea></div>
       <div class="checkbox-line">
-        <label><input type="checkbox" id="cpaCheck" onchange="toggleField('cpaBlock', this)"> CPA</label>
-      </div>
-      <div id="cpaBlock" class="optional-block"><textarea id="cpa"></textarea></div>
+  <label><input type="checkbox" id="cpaCheck"> CPA</label>
+</div>
       <div class="checkbox-line">
         <label><input type="checkbox" id="expertCheck" onchange="toggleField('expertBlock', this)"> Expert</label>
       </div>
@@ -349,7 +348,7 @@ hoverArea.addEventListener('mouseleave', () => {
 });
 let currentMode = "SOLDE";
 const presets = {
-  SOLDE: ["Analyse + Solde via assistant CRI () -> Terminé + PDL à jour","Analyse + Solde via assistant CRI (PRG sur CCB, libellé matériel corrigé) -> Terminé + PDL à jour","Analyse + Solde via assistant CRI (Modification des services souscrits: ) -> Terminé + PDL à jour -> M013  -> Suppression des frais facturés à torts"],
+  SOLDE: ["Analyse + Solde via assistant CRI () -> Terminé + PDL à jour","Analyse + Solde via assistant CRI (PRG sur CCB, libellé matériel corrigé) -> Terminé + PDL à jour","Analyse + Solde via assistant CRI (Modification des services souscrits: ) -> Terminé + PDL à jour -> M013  -> Suprression des frais facturés à torts"],
   PRE: ["Analyse + 1er appel KO + MV -> Relance","Analyse + 1er appel OK + RDV + SMS"]
 };
 const anomaliePresets = {
@@ -386,7 +385,7 @@ else {
     document.getElementById("copyBtn").style.display = "block";
     document.getElementById("resetBtn").style.display = "block";
 }
-  document.querySelectorAll("#capellaBlock, #cpaBlock, #expertBlock")
+  document.querySelectorAll("#capellaBlock, #expertBlock")
     .forEach(b => b.style.display = "none");
   document.querySelectorAll("#capellaCheck, #cpaCheck, #expertCheck")
     .forEach(c => c.checked = false);
@@ -405,14 +404,23 @@ else {
   }
 }
 function copyTemplate(t){navigator.clipboard.writeText((document.getElementById("expertCheck").checked?t+" - TRANSFERT EXPERT":t+" - SOLDÉ")); showCopyAlert();}
-function toggleField(id,c){document.getElementById(id).style.display=c.checked?"block":"none";}
-function applyPreset(){const v=document.getElementById("presetSelect").value; if(v) document.getElementById("fait").value=v;}
+function toggleField(id,c){
+  const block = document.getElementById(id);
+  block.style.display = c.checked ? "block" : "none";
+
+  if(id === "expertBlock" && c.checked){
+    const expertField = document.getElementById("expert");
+    if(expertField.value.trim() === ""){
+      expertField.value = "FMS - TRANSFERT EXPERT - KO\nBonjour, je vous prie de bien vouloir prendre en charge ce dossier car ";
+    }
+  }
+}function applyPreset(){const v=document.getElementById("presetSelect").value; if(v) document.getElementById("fait").value=v;}
 function applyAnomaliePreset(){const v=document.getElementById("anomalieSelect").value; if(v) document.getElementById("anomalie").value=v;}
 function applyIllicoPreset(v){if(v)document.getElementById("illico").value=v;}
 function addFaitPreset(){const t=document.getElementById("newFait").value.trim(); if(!t)return; presets[currentMode].push(t); setMode(currentMode); document.getElementById("newFait").value="";}
 function addAnomaliePreset(){const t=document.getElementById("newAnomalie").value.trim(); if(!t)return; anomaliePresets[currentMode].push(t); updateAnomalieMenu(); document.getElementById("newAnomalie").value="";}
 function updateAnomalieMenu(){const s=document.getElementById("anomalieSelect"); s.innerHTML='<option value="">-- Choisir --</option>'; anomaliePresets[currentMode].forEach(v=>{const o=document.createElement("option"); o.value=o.text=v; s.appendChild(o);});}
-function copierTexte(){let s=[]; s.push("Date souhaitée fournisseur : "+document.getElementById("date").value); s.push(document.getElementById("anomalieLabel").innerText+" "+document.getElementById("anomalie").value); s.push("Illico : "+document.getElementById("illico").value); s.push("Ce que j'ai fait : "+document.getElementById("fait").value); if(document.getElementById("capellaCheck").checked)s.push("Capella : "+document.getElementById("capella").value); if(document.getElementById("cpaCheck").checked)s.push("Action CPA : "+document.getElementById("cpa").value); if(document.getElementById("expertCheck").checked)s.push("Transfert Expert : "+document.getElementById("expert").value); navigator.clipboard.writeText(s.join("\n")); showCopyAlert();}
+function copierTexte(){let s=[]; s.push("Date souhaitée fournisseur : "+document.getElementById("date").value); s.push(document.getElementById("anomalieLabel").innerText+" "+document.getElementById("anomalie").value); s.push("Illico : "+document.getElementById("illico").value); s.push("Ce que j'ai fait : "+document.getElementById("fait").value); if(document.getElementById("capellaCheck").checked)s.push("Capella : "+document.getElementById("capella").value); if(document.getElementById("cpaCheck").checked)s.push("CPA : Oui"); if(document.getElementById("expertCheck").checked)s.push("Transfert Expert : "+document.getElementById("expert").value); navigator.clipboard.writeText(s.join("\n")); showCopyAlert();}
 function copierTexteRapide(b){navigator.clipboard.writeText(b.innerText).then(()=>showCopyAlert());}
 function showCopyAlert(){let m=document.createElement("div"); m.innerText="Texte copié !"; m.style.position="fixed"; m.style.bottom="20px"; m.style.left="50%"; m.style.transform="translateX(-50%)"; m.style.background="black"; m.style.color="white"; m.style.padding="8px 16px"; m.style.borderRadius="6px"; m.style.zIndex="999"; document.body.appendChild(m); setTimeout(()=>m.remove(),1500);}
 function resetAll(){
@@ -493,4 +501,3 @@ document.addEventListener("click", function(e) {
 </script>
 </body>
 </html>
-
