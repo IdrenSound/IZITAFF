@@ -120,10 +120,6 @@ body.dark select:focus {
   height: 42px; 
   resize: none; 
 }
-#cpa { 
-  height: 42px; 
-  resize: none; 
-}
 #expert { 
   height: 50px; 
   resize: none; 
@@ -415,7 +411,8 @@ function toggleField(id,c){
       expertField.value = "FMS - TRANSFERT EXPERT - KO\nBonjour, je vous prie de bien vouloir prendre en charge ce dossier car ";
     }
   }
-}function applyPreset(){const v=document.getElementById("presetSelect").value; if(v) document.getElementById("fait").value=v;}
+}
+function applyPreset(){const v=document.getElementById("presetSelect").value; if(v) document.getElementById("fait").value=v;}
 function applyAnomaliePreset(){const v=document.getElementById("anomalieSelect").value; if(v) document.getElementById("anomalie").value=v;}
 function applyIllicoPreset(v){if(v)document.getElementById("illico").value=v;}
 function addFaitPreset(){const t=document.getElementById("newFait").value.trim(); if(!t)return; presets[currentMode].push(t); setMode(currentMode); document.getElementById("newFait").value="";}
@@ -502,6 +499,7 @@ document.addEventListener("click", function(e) {
 </script>
 </body>
 </html>
+
 
 
 
