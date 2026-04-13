@@ -302,7 +302,7 @@ body.dark .signature { color: #666; }
     </div>
     <div id="quickModeBlock" class="optional-block">
       <button onclick="copierTexteRapide(this)">M002  ADRESSE RECEVABLE</button>
-      <button onclick="copierTexteRapide(this)">Demande :
+      <button onclick="copierTexteRapide(this)">Demande : 
 
 Traitement: Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
       <button onclick="copierTexteRapide(this)">Bonjour, le changement d'adresse a bien été effectué. Merci pour votre confiance. Cordialement.</button>
@@ -418,8 +418,40 @@ function applyIllicoPreset(v){if(v)document.getElementById("illico").value=v;}
 function addFaitPreset(){const t=document.getElementById("newFait").value.trim(); if(!t)return; presets[currentMode].push(t); setMode(currentMode); document.getElementById("newFait").value="";}
 function addAnomaliePreset(){const t=document.getElementById("newAnomalie").value.trim(); if(!t)return; anomaliePresets[currentMode].push(t); updateAnomalieMenu(); document.getElementById("newAnomalie").value="";}
 function updateAnomalieMenu(){const s=document.getElementById("anomalieSelect"); s.innerHTML='<option value="">-- Choisir --</option>'; anomaliePresets[currentMode].forEach(v=>{const o=document.createElement("option"); o.value=o.text=v; s.appendChild(o);});}
-function copierTexte(){let s=[]; s.push("Date souhaitée fournisseur : "+document.getElementById("date").value); s.push(document.getElementById("anomalieLabel").innerText+" "+document.getElementById("anomalie").value); s.push("Illico : "+document.getElementById("illico").value); s.push("Ce que j'ai fait : "+document.getElementById("fait").value); if(document.getElementById("capellaCheck").checked)s.push("Capella : "+document.getElementById("capella").value); if(document.getElementById("cpaCheck").checked)s.push("CPA : Oui"); if(document.getElementById("expertCheck").checked)s.push("Transfert Expert : "+document.getElementById("expert").value); navigator.clipboard.writeText(s.join("\n")); showCopyAlert();}
-function copierTexteRapide(b){navigator.clipboard.writeText(b.innerText).then(()=>showCopyAlert());}
+function copierTexte(){
+  let s = [];
+
+  const date = document.getElementById("date").value.trim();
+  const anomalie = document.getElementById("anomalie").value.trim();
+  const illico = document.getElementById("illico").value.trim();
+  const fait = document.getElementById("fait").value.trim();
+  const capella = document.getElementById("capella").value.trim();
+  const expert = document.getElementById("expert").value.trim();
+
+  if(date !== "")
+    s.push("Date souhaitée fournisseur : " + date);
+
+  if(anomalie !== "")
+    s.push(document.getElementById("anomalieLabel").innerText + " " + anomalie);
+
+  if(illico !== "")
+    s.push("Illico : " + illico);
+
+  if(fait !== "")
+    s.push("Ce que j'ai fait : " + fait);
+
+  if(document.getElementById("capellaCheck").checked && capella !== "")
+    s.push("Capella : " + capella);
+
+  if(document.getElementById("cpaCheck").checked)
+    s.push("CPA : Oui");
+
+  if(document.getElementById("expertCheck").checked && expert !== "")
+    s.push("Transfert Expert : " + expert);
+
+  navigator.clipboard.writeText(s.join("\n"));
+  showCopyAlert();
+}function copierTexteRapide(b){navigator.clipboard.writeText(b.innerText).then(()=>showCopyAlert());}
 function showCopyAlert(){let m=document.createElement("div"); m.innerText="Texte copié !"; m.style.position="fixed"; m.style.bottom="20px"; m.style.left="50%"; m.style.transform="translateX(-50%)"; m.style.background="black"; m.style.color="white"; m.style.padding="8px 16px"; m.style.borderRadius="6px"; m.style.zIndex="999"; document.body.appendChild(m); setTimeout(()=>m.remove(),1500);}
 function resetAll(){
   document.querySelectorAll("input[type=text],textarea").forEach(e=>e.value="");
@@ -499,12 +531,3 @@ document.addEventListener("click", function(e) {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
